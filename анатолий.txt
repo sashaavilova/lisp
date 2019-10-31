@@ -1,0 +1,27 @@
+;86.Определите функцию (f s), сортирующую список s по возрастанию.
+
+(defun minimum (s); функция поиска минимума 
+ (cond((null s) nil)  
+       ((null (cdr s))(car s)); если хвоста не существует то минимум голова  
+       ((< (car s) (car (cdr s))); если голова меньше головы хвоста 
+        (minimum (cons (car s) (cdr (cdr s))))); то создаем список из минимума головы и хвоста хвоста 
+       (t (minimum (cdr s))))); во всех остальных случаях вызываем минимум на хвосте функции          
+
+(defun level (s); функция убирает скобки 
+  (cond ((null s) nil)
+        ((atom (car s)) (cons (car s) (level (cdr s))))
+        (T (append (level (car s)) (level (cdr s))))))
+
+(defun del (s x); функция удаляет первое вхождение элемента 
+    (cond ((null s) nil)
+        ((eq (car s) x) (cdr s))
+        (T (cons (car s) (del (cdr s) x)) )
+        ))
+
+(defun f (s)
+    (if (null (level s)) nil; если список пуст то возращаем нил
+        (cons (minimum (level s)); иначе создаем список из самого маленького элемента 
+              (f (del (level s) (minimum (level s)))))); и вызова функции минимума без предыдущего самого маленького элемента 
+  )
+
+(print (f '(2 3 (4 4) 3 2 1)))

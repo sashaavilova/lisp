@@ -1,0 +1,9 @@
+(defun f(s x)
+    (cond (( null s) nil)
+        ((listp (car s)) (cons (f (car s) x) (f (cdr s) x)))
+        ((>= (car s) x) (f (cdr s) x))
+        (T(cons (car s) (f (cdr s) x)))
+     )
+)
+
+(print (f '( 1 ((3) 2)) 3))

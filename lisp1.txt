@@ -1,0 +1,5 @@
+( defun f( x )
+    ( cond ((null x) 0 )
+    (( atom (car x ))( + 1 ( f ( cdr x ))))
+    (T ( + (f ( car x)) (f (cdr x ))))))
+( print ( f '(1(1))))

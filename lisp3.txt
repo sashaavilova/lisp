@@ -1,0 +1,25 @@
+;95.	Пусть si и s2 - "множества с повторяющими элементами". Определите функцию (f si s2). которая вычисляет "разность множеств". Так, например,
+;вызов (f '(12121 3) '(5 3 3 1 2 2)) должен давать результат (1 1); а вызов (f '(5 3312 2)'(12121 3)) должен давать результат (5 3).
+
+(defun level (s)
+  (cond ((null s) nil)
+        ((atom (car s)) (cons (car s) (level (cdr s))))
+        (T (append (level (car s)) (level (cdr s))))))
+
+(defun del (s x)
+    (cond ((null s) nil)
+        ((eq (car s) x) (cdr s))
+        (T (cons (car s) (del (cdr s) x)) )
+        ))
+
+(defun f (si s2)  
+  (cond ((null s2) si)
+        ((null si) nil)
+       ((listp (car s2)) (f si (level s2)))
+       ((listp (car si)) (f (level si) s2))
+       (T (f (del si (car s2)) (cdr s2)))
+      ))
+
+(print (f '((5 3 (3)) 1 2 2) '(1 (2 1) 2 1 3)))
+
+

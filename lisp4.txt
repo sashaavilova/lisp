@@ -1,0 +1,39 @@
+;155.	Напишите функцию (f X Y P), которая возвращает список Z - "пересечение" списков X и Y,
+;т.е. список, содержащий их общие элементы, удовлетворяющие некоторому предикату P.
+
+
+
+(defun level (s)
+  (cond ((null s) nil)
+        ((atom (car s)) (cons (car s) (level (cdr s))))
+        (T (append (level (car s)) (level (cdr s))))))
+
+(defun fs (s x)
+    (cond ((null s) nil)
+        ((eq (car s) x) (car s))
+        (T  (fs (cdr s) x))
+        ))
+
+(defun del (s x)
+    (cond ((null s) nil)
+        ((eq (car s) x) (cdr s))
+        (T (cons (car s) (del (cdr s) x)) )
+        ))
+
+(defun _intersection (x y)
+    (cond ((null x) nil)
+        ((null y) nil)
+        (T(cons (fs x (car y)) (_intersection (del x (car y)) (cdr y))))
+        ))
+
+(defun f (x y p)
+    (if (funcall p (car x) ) '(нет пересечения) 
+       (let ((s1 (level x)) (s2 (level y)))
+       (_intersection s1 s2)
+   
+    ))
+  )
+
+(print (f '(1 (2 3) 4 5) '(5 (3) 6 4 8 9) 'atom))
+(print (f '(((5) 3 (3)) 1 2 2) '(1 (2 1) 2 1 3) 'atom))
+(print(f '(5) '(k k 2) 'atom))
